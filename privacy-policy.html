@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YTBM - Privacy Policy</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, 'Noto Sans KR', 'Segoe UI', sans-serif;
+      background: #f9f9f9;
+      color: #222;
+      line-height: 1.7;
+    }
+    header {
+      background: #cc0000;
+      color: white;
+      padding: 32px 24px 24px;
+    }
+    header h1 { font-size: 1.5rem; font-weight: 700; }
+    header p  { font-size: 0.9rem; opacity: 0.85; margin-top: 4px; }
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 36px 24px 60px;
+    }
+    .lang-toggle {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+    .lang-toggle button {
+      padding: 6px 18px;
+      border: 1.5px solid #cc0000;
+      background: white;
+      color: #cc0000;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.15s;
+    }
+    .lang-toggle button.active {
+      background: #cc0000;
+      color: white;
+    }
+    section { margin-bottom: 32px; }
+    h2 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #cc0000;
+      border-left: 4px solid #cc0000;
+      padding-left: 10px;
+      margin-bottom: 10px;
+    }
+    p { margin-bottom: 8px; font-size: 0.95rem; }
+    ul { padding-left: 20px; margin-bottom: 8px; }
+    li { font-size: 0.95rem; margin-bottom: 4px; }
+    .highlight {
+      background: #fff3cd;
+      border-left: 4px solid #ffc107;
+      padding: 12px 16px;
+      border-radius: 4px;
+      margin: 12px 0;
+      font-size: 0.92rem;
+    }
+    .updated {
+      font-size: 0.82rem;
+      color: #888;
+      margin-top: 32px;
+      text-align: right;
+    }
+    .lang-section { display: none; }
+    .lang-section.active { display: block; }
+    footer {
+      text-align: center;
+      padding: 24px;
+      font-size: 0.8rem;
+      color: #aaa;
+      border-top: 1px solid #eee;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🚫 YTBM — Block Manager for YouTube</h1>
+  <p>Privacy Policy · 개인정보처리방침</p>
+</header>
+
+<div class="container">
+  <div class="lang-toggle">
+    <button class="active" onclick="setLang('ko')">한국어</button>
+    <button onclick="setLang('en')">English</button>
+  </div>
+
+  <!-- 한국어 -->
+  <div class="lang-section active" id="ko">
+
+    <section>
+      <h2>1. 개요</h2>
+      <p>YTBM(Block Manager for YouTube)은 사용자의 YouTube 이용 경험을 개선하기 위한 브라우저 확장 프로그램입니다. 본 방침은 YTBM이 수집하거나 처리하는 데이터의 범위와 방법을 설명합니다.</p>
+    </section>
+
+    <section>
+      <h2>2. 수집하는 데이터</h2>
+      <p>YTBM은 기본적으로 어떠한 데이터도 외부 서버로 전송하지 않습니다. 모든 차단 목록, 키워드, 설정 값은 사용자의 브라우저 로컬 스토리지(<code>chrome.storage.local</code>)에만 저장됩니다.</p>
+      <ul>
+        <li>차단한 채널명 / 핸들 — 로컬 저장 전용</li>
+        <li>차단한 키워드 목록 — 로컬 저장 전용</li>
+        <li>차단한 영상 ID — 로컬 저장 전용</li>
+        <li>확장 프로그램 설정값 — 로컬 저장 전용</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>3. 커뮤니티 평판 기능 (선택적 opt-in)</h2>
+      <div class="highlight">
+        <strong>핵심 원칙:</strong> 모든 사용자 입력 데이터(채널 핸들)는 사용자가 커뮤니티 평판 기능에 명시적으로 동의(opt-in)한 경우에 한해, <strong>클라이언트(브라우저) 단에서 SHA-256으로 해시 처리된 후</strong> 서버로 전송됩니다. 개인을 특정할 수 있는 정보(PII)는 어떠한 경우에도 수집하지 않습니다.
+      </div>
+      <p>커뮤니티 평판 기능을 활성화한 경우:</p>
+      <ul>
+        <li>채널 핸들은 브라우저에서 SHA-256 해시로 변환된 후 전송됩니다.</li>
+        <li>원본 채널명 또는 핸들은 서버에 저장되지 않으며 복원도 불가능합니다.</li>
+        <li>전송되는 데이터에는 사용자를 식별할 수 있는 어떠한 정보도 포함되지 않습니다.</li>
+        <li>언제든지 팝업 → 설정에서 해당 기능을 OFF로 끌 수 있습니다.</li>
+        <li>기능을 끄면 이후 모든 전송이 즉시 중단됩니다.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>4. 커뮤니티 블랙리스트 동기화</h2>
+      <p>YTBM은 24시간마다 GitHub(raw.githubusercontent.com)에서 커뮤니티 블랙리스트를 수신합니다. 이 과정에서 사용자 정보는 전혀 전송되지 않으며, 데이터 수신만 이루어집니다.</p>
+    </section>
+
+    <section>
+      <h2>5. 콘텐츠 스크립트 및 iframe 접근</h2>
+      <p>YTBM의 콘텐츠 스크립트는 <code>all_frames: true</code> 설정을 통해 YouTube 페이지 내 iframe(미리보기, 임베드 플레이어 등)에서도 실행됩니다. 이는 YouTube 내부 프레임에서 차단된 채널의 콘텐츠를 필터링하기 위한 목적으로만 사용되며, iframe 내부에서 별도의 데이터 수집이나 외부 전송은 이루어지지 않습니다.</p>
+    </section>
+
+    <section>
+      <h2>6. 제3자 서비스</h2>
+      <ul>
+        <li><strong>Supabase</strong>: 커뮤니티 평판 opt-in 사용자의 익명 해시 데이터 수신에만 사용됩니다.</li>
+        <li><strong>GitHub (raw.githubusercontent.com)</strong>: 커뮤니티 블랙리스트 배포에만 사용됩니다.</li>
+        <li>두 서비스 모두 원본 사용자 데이터를 수신하지 않습니다.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>7. 데이터 보관 및 삭제</h2>
+      <p>모든 로컬 데이터는 사용자가 확장 프로그램을 제거하거나 브라우저 데이터를 삭제하면 함께 삭제됩니다. YTBM은 사용자 데이터를 별도로 백업하거나 보관하지 않습니다.</p>
+    </section>
+
+    <section>
+      <h2>8. 미성년자 보호</h2>
+      <p>YTBM은 13세 미만 아동의 데이터를 의도적으로 수집하지 않습니다.</p>
+    </section>
+
+    <section>
+      <h2>9. 방침 변경</h2>
+      <p>본 개인정보처리방침이 변경될 경우 이 페이지에서 업데이트됩니다. 중요한 변경사항은 확장 프로그램 업데이트 노트에 명시됩니다.</p>
+    </section>
+
+    <section>
+      <h2>10. 문의</h2>
+      <p>개인정보 관련 문의는 GitHub Issues를 통해 접수해 주세요.</p>
+    </section>
+
+    <p class="updated">최종 업데이트: 2026년 4월 23일</p>
+  </div>
+
+  <!-- English -->
+  <div class="lang-section" id="en">
+
+    <section>
+      <h2>1. Overview</h2>
+      <p>YTBM (Block Manager for YouTube) is a browser extension designed to improve your YouTube experience. This policy explains what data YTBM collects or processes and how.</p>
+    </section>
+
+    <section>
+      <h2>2. Data We Collect</h2>
+      <p>By default, YTBM does not transmit any data to external servers. All block lists, keywords, and settings are stored exclusively in your browser's local storage (<code>chrome.storage.local</code>).</p>
+      <ul>
+        <li>Blocked channel names / handles — local storage only</li>
+        <li>Blocked keyword list — local storage only</li>
+        <li>Blocked video IDs — local storage only</li>
+        <li>Extension settings — local storage only</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>3. Community Reputation Feature (Optional Opt-in)</h2>
+      <div class="highlight">
+        <strong>Core principle:</strong> All user input data (channel handles) is transmitted to our server <strong>only when the user has explicitly opted in</strong> to the Community Reputation feature, and only <strong>after being SHA-256 hashed on the client (browser) side</strong>. No personally identifiable information (PII) is collected under any circumstances.
+      </div>
+      <p>When the Community Reputation feature is enabled:</p>
+      <ul>
+        <li>Channel handles are converted to SHA-256 hashes in your browser before transmission.</li>
+        <li>Original channel names or handles are never stored on our servers and cannot be recovered.</li>
+        <li>No information that could identify you is included in any transmitted data.</li>
+        <li>You can disable this feature at any time via Popup → Settings.</li>
+        <li>Disabling immediately stops all future transmissions.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>4. Community Blacklist Sync</h2>
+      <p>YTBM periodically fetches a community blacklist from GitHub (raw.githubusercontent.com) every 24 hours. No user information is transmitted during this process — data is received only.</p>
+    </section>
+
+    <section>
+      <h2>5. Content Script &amp; iframe Access</h2>
+      <p>YTBM's content script runs in iframes within YouTube pages (such as preview players and embedded players) via <code>all_frames: true</code>. This is solely to filter blocked channel content within YouTube's internal frames. No data is collected or transmitted from within these iframes.</p>
+    </section>
+
+    <section>
+      <h2>6. Third-Party Services</h2>
+      <ul>
+        <li><strong>Supabase</strong>: Used solely to receive anonymous hash data from opt-in users of the Community Reputation feature.</li>
+        <li><strong>GitHub (raw.githubusercontent.com)</strong>: Used solely to distribute the community blacklist.</li>
+        <li>Neither service receives original user data.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>7. Data Retention & Deletion</h2>
+      <p>All local data is deleted when you uninstall the extension or clear your browser data. YTBM does not back up or retain user data separately.</p>
+    </section>
+
+    <section>
+      <h2>8. Children's Privacy</h2>
+      <p>YTBM does not knowingly collect data from children under 13.</p>
+    </section>
+
+    <section>
+      <h2>9. Changes to This Policy</h2>
+      <p>If this privacy policy changes, the update will be reflected on this page. Material changes will be noted in the extension's update notes.</p>
+    </section>
+
+    <section>
+      <h2>10. Contact</h2>
+      <p>For privacy-related inquiries, please open an issue on GitHub.</p>
+    </section>
+
+    <p class="updated">Last updated: April 23, 2026</p>
+  </div>
+</div>
+
+<footer>© 2026 YTBM Team</footer>
+
+<script>
+function setLang(lang) {
+  document.querySelectorAll('.lang-section').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.lang-toggle button').forEach(el => el.classList.remove('active'));
+  document.getElementById(lang).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>
