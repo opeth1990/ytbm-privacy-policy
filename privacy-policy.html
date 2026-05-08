@@ -116,21 +116,22 @@
     <section>
       <h2>3. 커뮤니티 평판 기능 (선택적 opt-in)</h2>
       <div class="highlight">
-        <strong>핵심 원칙:</strong> 모든 사용자 입력 데이터(채널 핸들)는 사용자가 커뮤니티 평판 기능에 명시적으로 동의(opt-in)한 경우에 한해, <strong>클라이언트(브라우저) 단에서 SHA-256으로 해시 처리된 후</strong> 서버로 전송됩니다. 개인을 특정할 수 있는 정보(PII)는 어떠한 경우에도 수집하지 않습니다.
+        <strong>핵심 원칙:</strong> 모든 사용자 입력 데이터(채널 핸들)는 사용자가 커뮤니티 평판 기능에 명시적으로 동의(opt-in)한 경우에 한해 서버로 전송됩니다. 전송된 데이터는 <strong>서버 단에서 HMAC-SHA256으로 해시 처리</strong>되어 저장되며, 원본 데이터는 서버에 보관되지 않습니다. 개인을 특정할 수 있는 정보(PII)는 어떠한 경우에도 수집하지 않습니다.
       </div>
       <p>커뮤니티 평판 기능을 활성화한 경우:</p>
       <ul>
-        <li>채널 핸들은 브라우저에서 SHA-256 해시로 변환된 후 전송됩니다.</li>
+        <li>채널 핸들은 서버(API 관문)에서 HMAC-SHA256 해시로 변환되어 저장됩니다.</li>
         <li>원본 채널명 또는 핸들은 서버에 저장되지 않으며 복원도 불가능합니다.</li>
         <li>전송되는 데이터에는 사용자를 식별할 수 있는 어떠한 정보도 포함되지 않습니다.</li>
+        <li>신고자의 IP 주소 역시 HMAC 해시 처리되어 원본은 저장되지 않습니다.</li>
         <li>언제든지 팝업 → 설정에서 해당 기능을 OFF로 끌 수 있습니다.</li>
         <li>기능을 끄면 이후 모든 전송이 즉시 중단됩니다.</li>
       </ul>
     </section>
 
     <section>
-      <h2>4. 커뮤니티 블랙리스트 동기화</h2>
-      <p>YTBM은 24시간마다 GitHub(raw.githubusercontent.com)에서 커뮤니티 블랙리스트를 수신합니다. 이 과정에서 사용자 정보는 전혀 전송되지 않으며, 데이터 수신만 이루어집니다.</p>
+      <h2>4. 평판 데이터 조회</h2>
+      <p>YTBM은 YouTube 댓글 영역에 표시되는 채널 핸들에 대해 커뮤니티 평판 데이터를 실시간으로 조회합니다. 이 과정에서 채널 핸들만 전송되며, 사용자의 개인정보나 브라우징 데이터는 전송되지 않습니다. 조회된 결과는 브라우저 메모리에 일시적으로 캐시되며, 브라우저 종료 시 자동 삭제됩니다.</p>
     </section>
 
     <section>
@@ -141,8 +142,8 @@
     <section>
       <h2>6. 제3자 서비스</h2>
       <ul>
-        <li><strong>Supabase</strong>: 커뮤니티 평판 opt-in 사용자의 익명 해시 데이터 수신에만 사용됩니다.</li>
-        <li><strong>GitHub (raw.githubusercontent.com)</strong>: 커뮤니티 블랙리스트 배포에만 사용됩니다.</li>
+        <li><strong>Cloudflare Workers</strong>: 확장앱과 데이터베이스 사이의 유일한 API 관문으로 사용됩니다. 모든 데이터는 이 서버를 경유하며, 클라이언트가 데이터베이스에 직접 접근하지 않습니다.</li>
+        <li><strong>Supabase</strong>: 커뮤니티 평판 데이터(HMAC 해시)를 저장하는 데이터베이스로 사용됩니다. 확장앱은 Supabase에 직접 접근하지 않으며, API 관문을 통해서만 통신합니다.</li>
         <li>두 서비스 모두 원본 사용자 데이터를 수신하지 않습니다.</li>
       </ul>
     </section>
@@ -167,7 +168,7 @@
       <p>개인정보 관련 문의는 GitHub Issues를 통해 접수해 주세요.</p>
     </section>
 
-    <p class="updated">최종 업데이트: 2026년 4월 23일</p>
+    <p class="updated">최종 업데이트: 2026년 5월 8일</p>
   </div>
 
   <!-- English -->
@@ -192,21 +193,22 @@
     <section>
       <h2>3. Community Reputation Feature (Optional Opt-in)</h2>
       <div class="highlight">
-        <strong>Core principle:</strong> All user input data (channel handles) is transmitted to our server <strong>only when the user has explicitly opted in</strong> to the Community Reputation feature, and only <strong>after being SHA-256 hashed on the client (browser) side</strong>. No personally identifiable information (PII) is collected under any circumstances.
+        <strong>Core principle:</strong> All user input data (channel handles) is transmitted to our server <strong>only when the user has explicitly opted in</strong> to the Community Reputation feature. Transmitted data is <strong>HMAC-SHA256 hashed on the server side</strong> before storage, and original data is never retained. No personally identifiable information (PII) is collected under any circumstances.
       </div>
       <p>When the Community Reputation feature is enabled:</p>
       <ul>
-        <li>Channel handles are converted to SHA-256 hashes in your browser before transmission.</li>
+        <li>Channel handles are converted to HMAC-SHA256 hashes on the server (API gateway) before storage.</li>
         <li>Original channel names or handles are never stored on our servers and cannot be recovered.</li>
         <li>No information that could identify you is included in any transmitted data.</li>
+        <li>Reporter IP addresses are also HMAC-hashed; original IPs are never stored.</li>
         <li>You can disable this feature at any time via Popup → Settings.</li>
         <li>Disabling immediately stops all future transmissions.</li>
       </ul>
     </section>
 
     <section>
-      <h2>4. Community Blacklist Sync</h2>
-      <p>YTBM periodically fetches a community blacklist from GitHub (raw.githubusercontent.com) every 24 hours. No user information is transmitted during this process — data is received only.</p>
+      <h2>4. Reputation Data Lookup</h2>
+      <p>YTBM queries community reputation data in real time for channel handles displayed in YouTube comment sections. Only channel handles are transmitted during this process — no personal information or browsing data is sent. Query results are temporarily cached in browser memory and automatically deleted when the browser is closed.</p>
     </section>
 
     <section>
@@ -217,8 +219,8 @@
     <section>
       <h2>6. Third-Party Services</h2>
       <ul>
-        <li><strong>Supabase</strong>: Used solely to receive anonymous hash data from opt-in users of the Community Reputation feature.</li>
-        <li><strong>GitHub (raw.githubusercontent.com)</strong>: Used solely to distribute the community blacklist.</li>
+        <li><strong>Cloudflare Workers</strong>: Used as the sole API gateway between the extension and the database. All data passes through this server; the client never accesses the database directly.</li>
+        <li><strong>Supabase</strong>: Used as the database for storing community reputation data (HMAC hashes). The extension does not access Supabase directly; all communication occurs through the API gateway.</li>
         <li>Neither service receives original user data.</li>
       </ul>
     </section>
@@ -243,7 +245,7 @@
       <p>For privacy-related inquiries, please open an issue on GitHub.</p>
     </section>
 
-    <p class="updated">Last updated: April 23, 2026</p>
+    <p class="updated">Last updated: May 8, 2026</p>
   </div>
 </div>
 
